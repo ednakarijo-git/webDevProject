@@ -1,0 +1,60 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block content %}
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <section class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Membership</h2>
+                    <ol>
+                        <li><a href="{% url 'home-url' %}">Home</a></li>
+                        <li>Membership requests</li>
+                        <li><a href="{% url 'logout-url' %}">Logout</a></li>
+                    </ol>
+                </div>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+        <section class="inner-page">
+            <div class="container">
+                {% for message in messages %}
+                    <p class="text-success text-center">{{ message }}</p>
+                {% endfor %}
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Delete</th>
+                        <th>Update</th>
+                    </tr>
+                    {% for membership in memberships %}
+                        <tr>
+                            <td>{{ membership.name }}</td>
+                            <td>{{ membership.email }}</td>
+                            <td>{{ membership.subject }}</td>
+                            <td>{{ membership.message }}</td>
+                            <td>
+                                {% if membership.status == "1" %}
+                                    <a class="btn btn-success" href="/status/{{ membership.id }}">Cancel</a>
+                                {% else %}
+                                    <a class="btn btn-warning" href="/status/{{ membership.id }}">Approve</a>
+                                {% endif %}
+                            </td>
+                            <td><a class="btn btn-danger" href="/delete/{{ membership.id }}">Delete</a></td>
+                            <td><a class="btn btn-info" href="">Update</a></td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </section>
+
+    </main><!-- End #main -->
+{% endblock %}
